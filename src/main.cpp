@@ -3,12 +3,13 @@
 
 using namespace std;
 using namespace CeriumUI;
+using namespace CeriumUI::Core::Common;
 
 int main() {
     system("chcp 65001");
 
-    Core::String str;
-    str = Core::String((Char8*)"Hello World!");
+    String str;
+    str = String((Char8*)"Hello World!");
     cout << str << "\n\tLength = " << str.Length() << "\n";
 
     str = (Char8*)"长亭外，古道边，芳草碧连天～";
@@ -41,6 +42,9 @@ int main() {
         cout << str.GetIndexChar(i);
     }
     cout << "\n";
+
+    String str_empty{};
+    cout << str_empty << "\n\tLength = " << str_empty.Length() << "\n";
 
     return 0;
 }

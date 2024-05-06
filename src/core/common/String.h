@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 
-namespace CeriumUI::Core {
+namespace CeriumUI::Core::Common {
 
     class String {
     public:
@@ -19,9 +19,14 @@ namespace CeriumUI::Core {
         // From index get Char in the String.
         Char8 GetIndexChar(int index);
 
+        bool IsEmpty();
+
         String& operator=(const String& str);
+
         String& operator=(const Char8* c);
+
         friend std::ostream& operator<<(std::ostream& out, const String& str);
+
         String operator[](int index);
 
     private:

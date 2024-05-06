@@ -1,18 +1,18 @@
 #include "String.h"
 
 
-namespace CeriumUI::Core {
+namespace CeriumUI::Core::Common {
 
     String::String() = default;
 
     String::String(const Char8 *c) {
         this->data = (Char8*)c;
-        data_len = Common::StrlenAuto(c);
+        data_len = Tool::StrlenAuto(c);
     }
 
     String::String(Char8 *c) {
         this->data = c;
-        data_len = Common::StrlenAuto(c);
+        data_len = Tool::StrlenAuto(c);
     }
 
     String::String(Char8 c) {
@@ -30,13 +30,23 @@ namespace CeriumUI::Core {
 
     // Todo
     Char16* String::ToChar16() {
-        return Common::Char8ToChar16(this->data);
+        return Tool::Char8ToChar16(this->data);
     }
 
     Char8 String::GetIndexChar(int index) {
-        String c = data[index];
-        Char8 temp = c.data[0];
-        return c.GetData()[0];
+        if (IsEmpty()) {
+            return {};
+        }
+
+        return ((String)data[index]).GetData()[0];
+    }
+
+    bool String::IsEmpty() {
+        if (data == nullptr || data == "") {
+            return true;
+        }
+
+        return false;
     }
 
     String &String::operator=(const String &str) {
@@ -44,18 +54,18 @@ namespace CeriumUI::Core {
             return *this;
         }
 
-        if (data) {
+        if (IsEmpty()) {
             delete[] data;
             data_len = 0;
         }
         data = str.data;
-        data_len = Common::StrlenAuto(str.data);
+        data_len = Tool::StrlenAuto(str.data);
 
         return *this;
     }
 
     String &String::operator=(const Char8 *c) {
-        data_len = Common::StrlenAuto(c);
+        data_len = Tool::StrlenAuto(c);
         data = (Char8*)c;
 
         return *this;
@@ -72,9 +82,8 @@ namespace CeriumUI::Core {
         }
 
         Char8 arr[2] = {data[index], '\0'};
-        String str(arr);
 
-        return str;
+        return String(arr);;
     }
 
 } // Core
