@@ -6,18 +6,18 @@ namespace CeriumUI::Core {
     class String {
     public:
         String();
-        String(const char* c);
+        String(const Char8* c);
 
         size_t Length();
-        char* GetData();
+        Char8* GetData();
         Char16* ToChar16();
 
         String& operator=(const String& str);
-        String& operator=(const char* c);
+        String& operator=(const Char8* c);
         friend std::ostream& operator<<(std::ostream& out, const String& str);
 
     private:
-        char* data{};
+        Char8* data{};
         size_t data_len{};
     };
 

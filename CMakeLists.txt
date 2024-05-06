@@ -5,6 +5,7 @@ set(PROJECT_NAME CeriumUI)
 project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 file(GLOB_RECURSE H_SRC src/core/common/*.h)
 file(GLOB_RECURSE CPP_SRC src/core/common/*.cpp)

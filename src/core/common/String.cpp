@@ -5,22 +5,22 @@ namespace CeriumUI::Core {
 
     String::String() = default;
 
-    String::String(const char *c) {
-        this->data = (char*)c;
-        data_len = Common::strlen_auto(c);
+    String::String(const Char8 *c) {
+        this->data = (Char8*)c;
+        data_len = Common::StrlenAuto(c);
     }
 
     size_t String::Length() {
         return data_len;
     }
 
-    char* String::GetData() {
+    Char8* String::GetData() {
         return data;
     }
 
     // Todo
     Char16* String::ToChar16() {
-        return 0;
+        return Common::Char8ToChar16(this->data);
     }
 
     String &String::operator=(const String &str) {
@@ -33,14 +33,14 @@ namespace CeriumUI::Core {
             data_len = 0;
         }
         data = str.data;
-        data_len = Common::strlen_auto(str.data);
+        data_len = Common::StrlenAuto(str.data);
 
         return *this;
     }
 
-    String &String::operator=(const char *c) {
-        data_len = Common::strlen_auto(c);
-        data = (char*)c;
+    String &String::operator=(const Char8 *c) {
+        data_len = Common::StrlenAuto(c);
+        data = (Char8*)c;
 
         return *this;
     }
