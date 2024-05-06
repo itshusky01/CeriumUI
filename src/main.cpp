@@ -5,7 +5,7 @@ using namespace std;
 using namespace CeriumUI;
 
 int main() {
-
+    system("chcp 65001");
 
     Core::String str;
     str = Core::String((Char8*)"Hello World!");
