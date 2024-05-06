@@ -17,9 +17,30 @@ int main() {
     Char8* c{};
     str = (Char8*)"为有牺牲多壮志，敢教日月换新天。";
     c = str.GetData();
-    cout << c << "\n";
+    cout << c << "\n\tLength = " << str.Length() << "\n";
 
-    cout << "UTF-16 = " << str.ToChar16() << "\n";
+//    cout << "UTF-16 = " << str.ToChar16() << "\n";
+
+    for (int i = 0; i < str.Length(); ++i) {
+        cout << str[i];
+    }
+    cout << "\n";
+
+    str = "\n\n"
+          "答案在风中飘\n"
+          "一个人必须抬头多少次\n"
+          "才能看到天空？\n"
+          "一个人必须有多少只耳朵\n"
+          "才能听到人们的哭泣？\n"
+          "要死多少人他才会知道\n"
+          "死了太多人？\n"
+          "答案，我的朋友，在风中飘扬\n"
+          "答案在风中飘扬"
+          "\n\n";
+    for (int i = 0; i < str.Length(); ++i) {
+        cout << str.GetIndexChar(i);
+    }
+    cout << "\n";
 
     return 0;
 }
