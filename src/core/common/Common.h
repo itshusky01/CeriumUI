@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include "cstring"
 #include <string>
@@ -9,16 +10,14 @@ typedef char Char8;
 
 namespace CeriumUI::Core::Common {
 
-    class Tool{
+    class Tool {
     public:
-        static void DetectorMaxMin(int src1, int src2, int* min, int* max);
+        static void DetectorMaxMin(int src1, int src2, int *min, int *max);
 
-        static void UTF8ToUTF16(Char8* pUTF8Start, Char8* pUTF8End, Char16* pUTF16Start, Char16* pUTF16End)
-        {
-            Char16* pTempUTF16 = pUTF16Start;
-            Char8* pTempUTF8 = pUTF8Start;
-            while (pTempUTF8 < pUTF8End && pTempUTF16 < pUTF16End)
-            {
+        static void UTF8ToUTF16(Char8 *pUTF8Start, Char8 *pUTF8End, Char16 *pUTF16Start, Char16 *pUTF16End) {
+            Char16 *pTempUTF16 = pUTF16Start;
+            Char8 *pTempUTF8 = pUTF8Start;
+            while (pTempUTF8 < pUTF8End && pTempUTF16 < pUTF16End) {
                 if (*pTempUTF8 >= 0xE0 && *pTempUTF8 <= 0xEF) {
                     // 处理三个字节的UTF-8字符
                     *pTempUTF16 = (*pTempUTF8++ & 0x1F) << 12;

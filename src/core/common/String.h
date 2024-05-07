@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Common.h"
 
 namespace CeriumUI::Core::Common {
@@ -6,22 +7,27 @@ namespace CeriumUI::Core::Common {
     class String {
     public:
         String();
-        String(const Char8* c);
-        String(Char8* c);
+
+        String(const Char8 *c);
+
+        String(Char8 *c);
+
         String(Char8 c);
 
+        // Get single byte string length.
         size_t Length();
 
-        Char8* GetData();
+        // Get include multibyte and single byte string length.
+        size_t LengthMultiByte();
 
-        Char16* ToChar16();
+        Char8 *GetData();
+
+        Char16 *ToChar16();
 
         // From index get Char in the String.
         Char8 GetIndexChar(int index);
 
         bool IsEmpty();
-
-        size_t LengthMultiByte();
 
         /*
          * Comparison two Strings.
@@ -29,27 +35,27 @@ namespace CeriumUI::Core::Common {
          * if comparison by one less than other one, return more than zero value.
          * if equal both, return zero.
          */
-        int Compare(String& s);
+        int Compare(String &s);
 
-        String& operator=(const String& str);
+        String &operator=(const String &str);
 
-        String& operator=(const Char8* c);
+        String &operator=(const Char8 *c);
 
-        friend std::ostream& operator<<(std::ostream& out, const String& str);
+        friend std::ostream &operator<<(std::ostream &out, const String &str);
 
         String operator[](int index);
 
     private:
-        Char8* data{};
+        Char8 *data{};
         size_t data_len{};
         size_t data_len_multibyte{};
 
-        void StrlenAuto(const Char8* c);
+        void StrlenAuto(const Char8 *c);
 
-        size_t StrlenC8(const Char8* c);
+        size_t StrlenC8(const Char8 *c);
 
         // For chinese and japanese etc.
-        bool ScanMultiBytes(Char8* c);
+        bool ScanMultiBytes(Char8 *c);
     };
 
 } // Core
