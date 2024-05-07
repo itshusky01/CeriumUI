@@ -3,16 +3,19 @@
 
 namespace CeriumUI::Core::Common {
 
-    String::String() = default;
+    String::String() {
+        this->data = nullptr;
+        data_len = 0;
+    }
 
     String::String(const Char8 *c) {
         this->data = (Char8*)c;
-        data_len = Tool::StrlenAuto(c);
+        StrlenAuto(this->data);
     }
 
     String::String(Char8 *c) {
         this->data = c;
-        data_len = Tool::StrlenAuto(c);
+        StrlenAuto(this->data);
     }
 
     String::String(Char8 c) {
@@ -20,7 +23,39 @@ namespace CeriumUI::Core::Common {
         data_len = 1;
     }
 
+    void String::StrlenAuto(const Char8* c) {
+        // Calculate single byte string length.
+        data_len = StrlenC8(c);
+
+        // Calculate include multibyte and single byte string length.
+        data_len_multibyte = 0;
+        for (int i = 0; i < StrlenC8(c); ++i) {
+            const Char8 temp[3] = {c[i] };
+            if(ScanMultiBytes((Char8*)temp)) {
+                data_len_multibyte += 1;
+                i+=2;
+            } else{
+                data_len_multibyte += 1;
+            }
+        }
+    }
+
+    size_t String::StrlenC8(const Char8* c) {
+        return strlen(c);
+    }
+
+    bool String::ScanMultiBytes(Char8 *c) {
+        for (int i = 0; i < strlen(c); ++i) {
+            if (((*(c + i)) & 0x80) != 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     size_t String::Length() {
+        StrlenAuto((Char8*)data);
         return data_len;
     }
 
@@ -30,7 +65,7 @@ namespace CeriumUI::Core::Common {
 
     // Todo
     Char16* String::ToChar16() {
-        return Tool::Char8ToChar16(this->data);
+        return 0;
     }
 
     Char8 String::GetIndexChar(int index) {
@@ -49,6 +84,12 @@ namespace CeriumUI::Core::Common {
         return false;
     }
 
+    int String::Compare(String& s) {
+        int counter = 0;
+
+        return counter;
+    }
+
     String &String::operator=(const String &str) {
         if (this == &str){
             return *this;
@@ -59,19 +100,22 @@ namespace CeriumUI::Core::Common {
             data_len = 0;
         }
         data = str.data;
-        data_len = Tool::StrlenAuto(str.data);
+        StrlenAuto(str.data);
 
         return *this;
     }
 
     String &String::operator=(const Char8 *c) {
-        data_len = Tool::StrlenAuto(c);
+        StrlenAuto(c);
         data = (Char8*)c;
 
         return *this;
     }
 
     std::ostream &operator<<(std::ostream &out, const String &str) {
+        if (str.data == nullptr || str.data == "") {
+            return out;
+        }
         out << str.data;
         return out;
     }
@@ -84,6 +128,10 @@ namespace CeriumUI::Core::Common {
         Char8 arr[2] = {data[index], '\0'};
 
         return String(arr);;
+    }
+
+    size_t String::LengthMultiByte() {
+        return this->data_len_multibyte;
     }
 
 } // Core

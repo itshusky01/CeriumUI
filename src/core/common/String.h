@@ -21,6 +21,16 @@ namespace CeriumUI::Core::Common {
 
         bool IsEmpty();
 
+        size_t LengthMultiByte();
+
+        /*
+         * Comparison two Strings.
+         * if comparison by characters count more than other one, return low than zero value.
+         * if comparison by one less than other one, return more than zero value.
+         * if equal both, return zero.
+         */
+        int Compare(String& s);
+
         String& operator=(const String& str);
 
         String& operator=(const Char8* c);
@@ -32,6 +42,14 @@ namespace CeriumUI::Core::Common {
     private:
         Char8* data{};
         size_t data_len{};
+        size_t data_len_multibyte{};
+
+        void StrlenAuto(const Char8* c);
+
+        size_t StrlenC8(const Char8* c);
+
+        // For chinese and japanese etc.
+        bool ScanMultiBytes(Char8* c);
     };
 
 } // Core
