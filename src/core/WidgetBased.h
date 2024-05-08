@@ -1,6 +1,7 @@
 #pragma once
+#include "../common/math/Math.hpp"
 
-#include <iostream>
+using namespace CeriumUI::Common::Math;
 
 namespace CeriumUI::Core {
     class WidgetBased {
@@ -9,6 +10,8 @@ namespace CeriumUI::Core {
         virtual void Destroy() = 0;
 
     private:
+        Vector2<int> position;
+        Vector2<int> size;
 
     };
 }
