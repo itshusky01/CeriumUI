@@ -12,5 +12,7 @@ int main() {
     wText.Init();
     wText.Destroy();
 
+    std::cout << "Hello World\n你好，世界。\n";
+
     return 0;
 }
