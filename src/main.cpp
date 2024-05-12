@@ -1,13 +1,28 @@
+#if defined(linux)
 // GLES
 #include <GLES/gl.h>
 #include <GLES/glext.h>
-
 // EGL
 #include <GLES/egl.h>
-
 // SDL2
 #include <SDL2/SDL.h> // For Events
 #include <SDL2/SDL_syswm.h>
+#endif
+
+#if defined(__WIN32__)
+// GLAD
+#include <glad/glad.h>
+// GLES
+//#include <GLES/gl.h>
+//#include <GLES/glext.h>
+// EGL
+//#include <GLES/egl.h>
+#include <EGL/egl.h>
+// SDL2
+#include <SDL2/SDL.h> // For Events
+#include <SDL2/SDL_syswm.h>
+
+#endif
 
 EGLDisplay glDisplay;
 EGLConfig glConfig;
@@ -85,8 +100,11 @@ void init_GLES(void) {
     SDL_VERSION(&sysInfo.version); // Set SDL version
     SDL_GetWindowWMInfo(glesWindow, &sysInfo);
     glContext = eglCreateContext(glDisplay, glConfig, EGL_NO_CONTEXT, NULL);
-    glSurface = eglCreateWindowSurface(glDisplay, glConfig,
-                                       (EGLNativeWindowType) sysInfo.info.x11.window, 0); // X11?
+#if defined(linux)
+    glSurface = eglCreateWindowSurface(glDisplay, glConfig, (EGLNativeWindowType) sysInfo.info.x11.window, 0); // X11
+#elif defined(__WIN32__)
+    glSurface = eglCreateWindowSurface(glDisplay, glConfig, (EGLNativeWindowType) sysInfo.info.win.window, 0); // Win
+#endif
     eglMakeCurrent(glDisplay, glSurface, glSurface, glContext);
     eglSwapInterval(glDisplay, 1);
     glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
@@ -121,7 +139,7 @@ void draw_frame() {
     mCubeRotation -= 0.50f;
 }
 
-int main(void) {
+int main(int argv, char **args) {
     int loop = 1;
     SDL_Event event;
     init_GLES();
